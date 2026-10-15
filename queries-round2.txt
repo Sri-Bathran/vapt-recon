@@ -1,0 +1,20 @@
+# Round 2: verification queries (generic). Run: snippets.ps1 -QueryFile queries-round2.txt
+# label :: regex :: path regex :: context lines :: max hits
+native JS bridge methods exposed to WebView content :: @JavascriptInterface :: ^android\\ :: 8 :: 25
+capacitor config (server url, allowed navigation, plugins) :: . :: capacitor\.config\.json$ :: 0 :: 90
+cordova config (access origins, allowed intents) :: <access|allow-navigation|allow-intent|AllowedSchemes|hostname|scheme :: config\.xml$ :: 0 :: 40
+cordova plugin versions :: ^\s*"[a-z0-9._-]+"\s*:\s*"[0-9][0-9a-z.\-]*",?\s*$ :: cordova_plugins\.js$ :: 0 :: 150
+js handlers / channels exposed by flutter webviews :: addJavaScriptHandler|addJavaScriptChannel :: \.dart$ :: 4 :: 40
+otp or script injected into a webview :: otpInjectionScript|otpClearScript :: inject[a-z_]*\.dart$ :: 12 :: 10
+download requests: host check and token header :: URL\(|openConnection|setRequestProperty|authTokenProvider|isTrusted|allowed|whitelist|host|startsWith :: Download[A-Za-z]*\.(kt|java|swift)$ :: 3 :: 30
+flutter storage keys: plain versus secure :: SharedPreferencesKey\(|SecureSharedPreferencesKey\(|DeviceStorageKey\(|SecureStorageKey\( :: storage[a-z_]*\.dart$ :: 0 :: 150
+native logging set-up (release builds) :: Timber\.plant|DebugTree|BuildConfig\.DEBUG|ReleaseTree|Log\.isLoggable :: \.(kt|java)$ :: 2 :: 20
+dart logging and build-mode switches :: kReleaseMode|kDebugMode|Logger\.root\.level|isProduction|buildType :: \.dart$ :: 0 :: 40
+deep link scheme checks (native) :: scheme\s*==|\.scheme\b|Hosts\s*=|Paths\s*=|listOf\( :: (MainActivity|Deeplink|DeepLink)[A-Za-z]*\.(kt|swift)$ :: 6 :: 25
+build type and flavor names :: ^\s*(release|debug|profile|qa|stage|prod|dev|preprod|inspect|[a-zA-Z0-9]+)\s*\{ :: android\\app\\build\.gradle$ :: 0 :: 60
+flavor deep-link and scheme values :: [A-Za-z]*[sS]cheme[A-Za-z]*\s*[:=]|appLink[A-Za-z]*\s*[:=] :: android\\app\\build\.gradle$ :: 0 :: 20
+CI triggers and input types :: workflow_dispatch|workflow_call|workflow_run|repository_dispatch|pull_request|type: (choice|string|boolean)|options: :: \.github\\workflows :: 0 :: 120
+root / jailbreak / tamper enforcement :: safe_device|isJailBroken|isRealDevice|isRooted|RootBeer|freerasp|jailbreak|isDeviceRooted :: \.(dart|kt|swift)$ :: 2 :: 25
+screenshot / screen-capture protection :: FLAG_SECURE|setSecure|preventScreenshot|screenProtector|secureApplication|isCaptured :: \.(dart|kt|java|swift)$ :: 1 :: 15
+biometric use (is it bound to a key?) :: BiometricPrompt|local_auth|biometricOnly|CryptoObject|LAContext|evaluatePolicy|authenticate\( :: \.(dart|kt|java|swift)$ :: 2 :: 25
+hybrid module dependencies :: capacitor-cordova-android-plugins|implementation project|api project :: AREVUK1\\build\.gradle$|capacitor[^\\]*\\build\.gradle$ :: 0 :: 20
