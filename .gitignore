@@ -1,0 +1,18 @@
+# never commit client material or secrets
+review-files/
+recon-output/
+inventory.csv
+*.jks
+*.keystore
+*.p12
+*.pem
+*.key
+.env
+.env.*
+local.properties
+gradle.properties
+google-services.json
+GoogleService-Info.plist
+*.apk
+*.aab
+*.zip
