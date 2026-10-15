@@ -1,0 +1,9 @@
+# Round 3: remaining checks (generic). Run: snippets.ps1 -QueryFile queries-round3.txt
+# label :: regex :: path regex :: context lines :: max hits
+OTA / live-update config and integrity (native, config, scripts) :: CapacitorUpdater|autoUpdateUrl|capgo|checksum|publicKey|signature|directUpdate|resetWhenUpdate|version\.json|ota/ :: ^(?!.*\\assets\\(public\\assets\\)?js\\).*\.(kt|java|swift|json|dart|yml|yaml|gradle|xml|ts|properties|sh)$ :: 1 :: 40
+OTA / live-update logic inside the web bundle :: CapacitorUpdater|autoUpdateUrl|ota/|\.download\(|\.set\( :: main\.[0-9a-f]+\.js$ :: 0 :: 12
+webview navigation rules and JS message handling :: NavigationDecision|onNavigationRequest|shouldOverrideUrlLoading|_handleJavaScriptMessage|_onJsMessage|jsonDecode|\['(type|action|url|event)'\] :: lib\\.*webview.*\.dart$ :: 3 :: 50
+where the OTP text comes from and how it is validated :: RegExp\(|\\d\{|isNumeric|replaceAll|\.length == :: otp[a-z_]*\.dart$ :: 2 :: 30
+ios FCM token log: is it debug-only :: FCM TOKEN|#if DEBUG|#endif|NSLog\("%@" :: AppDelegate\.swift$ :: 3 :: 20
+CI: how signing and registry secrets are handled :: RELEASE_KEYSTORE|keystore|base64|\.jks|MavenPassword|MavenUser|secrets\.[A-Za-z_]+ :: \.github\\workflows :: 0 :: 60
+custom tab opener (target of the JS bridge) :: openUrlInCustomTab|CustomTabsIntent|Uri\.parse|startActivity :: Activity\.kt$ :: 6 :: 15
