@@ -89,7 +89,7 @@ foreach ($f in ($found | Where-Object { $_.Name -ieq 'Info.plist' } | Sort-Objec
     for ($i = 0; $i -lt $pl.Count; $i++) {
         if ($pl[$i] -match 'NSAppTransportSecurity|NSAllowsArbitraryLoads|NSExceptionDomains|NSExceptionAllowsInsecureHTTPLoads|NSAllowsLocalNetworking|CFBundleURLSchemes|LSApplicationQueriesSchemes') {
             $hits += ('   {0}: {1}' -f ($i + 1), $pl[$i].Trim())
-            if ($i + 1 -lt $pl.Count) { $hits += ('   {0}: {1}' -f ($i + 2), $pl[$i + 1].Trim()) }
+            for ($k = 1; $k -le 6; $k++) { if ($i + $k -lt $pl.Count) { $hits += ('   {0}: {1}' -f ($i + $k + 1), $pl[$i + $k].Trim()) } }
         }
     }
     if ($hits.Count -gt 0) { $p += "== $(Rel $f)"; $p += $hits }

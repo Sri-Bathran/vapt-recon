@@ -28,3 +28,16 @@ Options for `project_recon.ps1`: `-TopN 100`, `-OutputDir`, `-MaxFileMB 3`, `-No
   Read the output before sharing it, and share it only through a private channel. **Never commit it to a public repository.**
 - `collect_review_files.ps1 -CopyFiles -ListFile <list>` copies chosen source files into `review-files\`; that is client material.
 - Download: open a script on github.com > **Raw** > Ctrl+S, or Code > Download ZIP.
+
+## Verifying a finding without sharing source: `snippets.ps1`
+
+Prints short, masked excerpts around regex matches (cloud keys, tokens, URL credentials, long token-like strings,
+PAN / Aadhaar / mobile numbers are cut to their first characters) and appends them to `recon-output\snippets.txt`.
+
+```powershell
+powershell -ExecutionPolicy Bypass -File snippets.ps1 -Pattern 'polyfill\.io' -PathLike '\.js$'
+powershell -ExecutionPolicy Bypass -File snippets.ps1 -QueryFile queries.txt
+```
+
+Query file: one query per line, `label :: regex :: path regex :: context lines :: max hits` (`#` starts a comment).
+`publish_results.ps1` includes `snippets.txt` in the share folder.
