@@ -1,0 +1,22 @@
+# Generic verification queries for Android / Flutter / Capacitor-Cordova / iOS projects.
+# label :: regex :: path regex :: context lines :: max hits      (run: snippets.ps1 -QueryFile queries-android-flutter.txt)
+polyfill.io or other risky script hosts in web bundles :: polyfill\.io|cdn\.polyfill|bootcss|staticfile\.org :: \.js$|\.html$ :: 0 :: 8
+secret-looking key inside a URL (DSN style) :: https?://[0-9a-f]{32}@ :: \.js$ :: 0 :: 4
+dev / staging / admin / storage hosts in web bundles :: staging[0-9]*\.|-staging|admin[0-9]*\.|[a-z0-9-]*-dev-[a-z0-9-]*\.s3|s3[.-][a-z0-9-]+\.amazonaws\.com :: \.js$ :: 0 :: 20
+module dependencies (which modules end up in the app) :: implementation project|api project|implementation\(project|include\s+':|include\(" :: build\.gradle$|settings\.gradle$|build\.gradle\.kts$|settings\.gradle\.kts$ :: 0 :: 60
+build types, flavors, signing, pinning switches :: buildTypes|productFlavors|minifyEnabled|debuggable|signingConfig|SSL_PINNING|disableSSLPinning|pinning|manifestPlaceholders|networkSecurityConfig|applicationIdSuffix|useReleaseSigning :: android\\app\\build\.gradle(\.kts)?$ :: 0 :: 80
+network security config (full file) :: . :: network_security_config\.xml$ :: 0 :: 80
+iOS App Transport Security :: NSAllowsArbitraryLoads|NSExceptionAllowsInsecureHTTPLoads|NSAllowsLocalNetworking|NSExceptionMinimumTLSVersion|NSExceptionDomains :: Info\.plist$ :: 5 :: 10
+Android WebView settings and JS bridge :: addJavascriptInterface|setJavaScriptEnabled|setAllowFileAccess|AllowUniversalAccess|setWebContentsDebuggingEnabled|shouldOverrideUrlLoading|loadUrl\( :: src\\main\\(java|kotlin) :: 2 :: 30
+native token and session storage :: EncryptedSharedPreferences|MasterKey|getSharedPreferences|SharedPreferences|DataStore|preferencesDataStore|AuthState|refreshToken|refresh_token|accessToken|access_token|putString|writeString :: (Auth|Token|Session|Storage|Prefs|Credential|OAuth|Login)[A-Za-z]*\.(kt|java)$ :: 1 :: 50
+flutter storage use :: FlutterSecureStorage|flutter_secure_storage|SharedPreferences|setString\(|accessibility|encryptedSharedPreferences|resetOnError :: lib\\.*(storage|auth|token|session|secure) :: 0 :: 50
+iOS keychain accessibility :: kSecAttrAccessible[A-Za-z]*|kSecAttrSynchronizable :: \.swift$ :: 0 :: 20
+token or PII in logs :: (print|debugPrint|log|Timber\.[a-z]|Log\.[a-z]|logger\.[a-z]+|NSLog)\(.{0,80}(token|authorization|bearer|otp|password|pan\b|aadhaar) :: \.(dart|kt|java|swift)$ :: 0 :: 30
+android deep link handling :: getData|intent\.data|handleDeepLink|handleDeeplink|startsWith\(|authority|\.host :: (MainActivity|Deeplink|DeepLink|Link)[A-Za-z]*\.(kt|java)$ :: 2 :: 30
+flutter webview and URL handling :: allowedHosts|allowlist|whitelist|Uri\.parse|canLaunchUrl|launchUrl|loadRequest|initialUrlRequest|addJavaScriptChannel|JavaScriptChannel|onPermissionRequest|javaScriptMode|allowFileAccess :: lib\\.*(webview|browser|deeplink|link) :: 0 :: 50
+flutter javascript injection :: evaluateJavascript|runJavaScript|injectScript|addJavaScriptHandler|postMessage :: \.dart$ :: 0 :: 30
+android download handling :: getExternalStoragePublicDirectory|MediaStore|Authorization|Bearer|FileProvider|setDestinationInExternal :: Download[A-Za-z]*\.(kt|java)$ :: 1 :: 20
+sms / broadcast receiver registration :: registerReceiver|RECEIVER_EXPORTED|RECEIVER_NOT_EXPORTED|SEND_PERMISSION|SmsRetriever :: \.(kt|java)$ :: 1 :: 20
+CI untrusted input :: pull_request_target|github\.event\.(pull_request|issue|comment|head_commit)|\$\{\{ *inputs\. :: \.github\\workflows :: 0 :: 40
+flutter asset declarations :: ^\s*-\s*assets/|^\s*assets: :: pubspec\.yaml$ :: 0 :: 50
+mock data with PAN-like values :: [A-Z]{5}[0-9]{4}[A-Z] :: assets\\ :: 0 :: 10
